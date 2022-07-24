@@ -1,22 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieShop.Models;
 using System.Diagnostics;
+using ApplicationCore.Contracts.Services;
 
 namespace MovieShop.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly ILogger<MoviesController> _logger;
+        private readonly IMovieService _movieService;
 
-        public MoviesController(ILogger<MoviesController> logger)
+        public MoviesController(IMovieService movieService)
         {
-            _logger = logger;
+            _movieService = movieService;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movieDetails = await _movieService.GetMovieDetails(id);
+            return View(movieDetails);
         }
     }
 }

@@ -1,0 +1,181 @@
+﻿@model ApplicationCore.Models.MovieDetailsModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+ <div style="background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(@Model.BackdropUrl); background-size: cover" class="backdrop container-fluid">
+     <div class="row justify-content-center">
+         <div style="text-align: center" class="col">
+             <img src="@Model.PosterUrl">
+         </div>
+         <div class="col">
+             <div class="row">
+                 <h1>@Model.Title</h1>
+                 <p style="font-size:.75em">@Model.Tagline</p>
+             </div>
+             <br>
+             <div class="row">
+                 <div class="col">
+                     @Model.RunTime m | @Model.ReleaseDate.Year
+                 </div>
+                 <div class="col">
+                    @foreach (var genre in @Model.Genres)
+                    {
+                        <span class="badge rounded-pill bg-secondary">@genre.Name</span>
+                    }
+                 </div>
+             </div>
+             <br>
+             <div class="row">
+                 <div class="col">
+                     <h2><span class="badge bg-success">8.9</span></h2>
+               </div>
+             </div>
+             <br>
+             <p>@Model.Overview</p>
+         </div>
+         <div class="col review-purchase">
+             <div class="row justify-content-center">
+                 <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#reviewModal">Review</button>
+             </div>
+             <br>
+             <div class="row justify-content-center">
+                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">Purchase $@Model.Price</button>
+             </div>
+         </div>
+     </div>
+ </div>
+ <br>
+ <div class="container-fluid">
+     <div class="row">
+         <div class="col-4 movie-info">
+             <h4>MOVIE INFO</h4>
+             <br>
+             <div class="row">
+                 <div class="col">
+                     <p>Release Date</p>
+                     <span class="badge rounded-pill bg-dark">@Model.ReleaseDate.ToString("MMM dd, yyyy")</span>
+                 </div>
+             </div>
+             <hr>
+             <div class="row">
+                 <div class="col">
+                     <p>RunTime</p>
+                     <span class="badge rounded-pill bg-dark">@Model.RunTime m</span>
+                 </div>
+             </div>
+             <hr>
+             <div class="row">
+                 <div class="col">
+                     <p>Box Office Revenue</p>
+                     <span class="badge rounded-pill bg-dark">$@String.Format("{0:0,0.00}", Model.Revenue)</span>
+                 </div>
+             </div>
+             <hr>
+             <div class="row">
+                 <div class="col">
+                     <p>Budget</p>
+                     <span class="badge rounded-pill bg-dark">$@String.Format("{0:0,0.00}", Model.Budget)</span>
+                 </div>
+             </div>
+             <hr><br>
+             <h4>TRAILERS</h4>
+            @foreach (var trailer in @Model.Trailers)
+            {
+                <div class="trailer-data row">
+                    <a target="_blank" href="@trailer.TrailerUrl">@trailer.Name</a>
+                </div>
+            }
+        </div>
+         <div class="col-8 cast-info">
+             <h4>CAST</h4>
+             <br>
+             <div class="row justify-content-center">
+                <div class="col">
+    
+                </div>
+                <div class="col">
+                    <h4>Actor/Actress</h4>
+                </div>
+                <div class="col">
+                    <h4>Character</h4>
+                </div>
+            </div>
+            @foreach (var castMember in @Model.Casts)
+            {
+                <div class="cast-data row">
+                    <div class="col">
+                        <a asp-controller="Cast" asp-action="Details" asp-route-id="@castMember.Id">
+                            <img class="rounded-circle" src="@castMember.ProfilePath">
+                        </a>
+                    </div>
+                    <div class="col">
+                        @castMember.Name
+                    </div>
+                    <div class="col">
+                        @castMember.Character
+                    </div>
+                </div>
+                <hr>
+            }
+         </div>
+     </div>
+</div>
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Leave a review for @Model.Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="rating">Choose Rating:</label>
+                        <select class="form-control" id="rating">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="review">Write your review here:</label>
+                        <textarea class="form-control" rows="5" id="review"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Purchase movie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You are about to make the following purchase:</p>
+                <p>@Model.Title</p>
+                <p>@Model.Price</p>
+                <p>Please confirm this purchase</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Purchase</button>
+            </div>
+        </div>
+    </div>
+</div>

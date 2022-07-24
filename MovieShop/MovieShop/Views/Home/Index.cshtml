@@ -1,8 +1,23 @@
-﻿@{
+﻿@model List<ApplicationCore.Models.MovieCardModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="rounded">
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var movieCard in Model)
+            {
+                <div class="col-xl-2 col-sm-4 col-lg-3 col-6">
+                    <div class="card mb-4">
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movieCard.Id" >
+                            <img src="@movieCard.PosterUrl" class="img-fluid" alt="@movieCard.Title" />
+                        </a>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
 </div>

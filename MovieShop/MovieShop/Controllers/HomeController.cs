@@ -1,24 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieShop.Models;
 using System.Diagnostics;
+using ApplicationCore.Contracts.Services;
 
 namespace MovieShop.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IMovieService _movieService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IMovieService movieService)
         {
             _logger = logger;
+            _movieService = movieService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var movieCards = await _movieService.GetTopRevenueMovies();
+            return View(movieCards);
+        }
+
+        [HttpGet]
+        public IActionResult Privacy()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult TopRatedMovies()
         {
             return View();
         }
