@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {}
+    "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {
+    "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
         "projectName": "ApplicationCore",
-        "projectPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
+        "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
