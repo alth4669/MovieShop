@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj": {}
+    "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {
+    "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
         "projectName": "ApplicationCore",
-        "projectPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
+        "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,14 +58,14 @@
         }
       }
     },
-    "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -82,8 +82,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {
-                "projectPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj"
+              "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj": {
+                "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\ApplicationCore\\ApplicationCore.csproj"
               }
             }
           }
@@ -132,14 +132,14 @@
         }
       }
     },
-    "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj": {
+    "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj",
         "projectName": "MovieShop",
-        "projectPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj",
+        "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\MovieShop\\MovieShop.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\MovieShop\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\MovieShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -156,8 +156,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Alex\\Desktop\\Antra\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\MovieShop\\MovieShop\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
