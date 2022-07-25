@@ -20,7 +20,9 @@ namespace Infrastructure.Services
         public async Task<List<GenreModel>> GetAllGenres()
         {
             var genres = await _genreRepository.GetAllGenres();
-            var genresModels = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name }).ToList();
+            var genresModels = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name })
+                .OrderBy(g => g.Name)
+                .ToList();
             return genresModels;
 
         }

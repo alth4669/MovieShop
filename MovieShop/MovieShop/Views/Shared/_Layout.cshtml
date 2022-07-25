@@ -25,6 +25,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" id="genreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Genres
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                @inject IGenreService _genreService
+                                @foreach (var genre in await _genreService.GetAllGenres())
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="@genre.Id">@genre.Name</a></li>
+                                }
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

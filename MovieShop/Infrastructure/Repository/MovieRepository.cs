@@ -18,9 +18,17 @@ namespace Infrastructure.Repository
             _movieShopDbContext = dbContext;
         }
 
+        public async Task<List<Movie>> GetByGenre(int genreId)
+        {
+            var movies = await _movieShopDbContext.Movies
+                .Include(m => m.GenresOfMovie)
+                .Where(m => m.GenresOfMovie.Any(g => g.GenreId == genreId)).Take(30)
+                .ToListAsync();
+            return movies;
+        }
+
         public async Task<Movie> GetById(int id)
         {
-
             var movieDetails = await _movieShopDbContext.Movies
                 .Include(m => m.GenresOfMovie).ThenInclude(m => m.Genre)
                 .Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)

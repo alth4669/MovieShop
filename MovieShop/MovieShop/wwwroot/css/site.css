@@ -17,6 +17,11 @@ body {
   margin-bottom: 60px;
 }
 
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
 .backdrop {
     color: white;
     width: 100%;
