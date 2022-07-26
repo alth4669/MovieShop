@@ -18,12 +18,14 @@ namespace Infrastructure.Repository
             _movieShopDbContext = dbContext;
         }
 
-        public async Task<List<Movie>> GetByGenre(int genreId)
+        public async Task<List<Movie>> GetByGenre(int genreId, int page)
         {
             var movies = await _movieShopDbContext.Movies
                 .Include(m => m.GenresOfMovie)
-                .Where(m => m.GenresOfMovie.Any(g => g.GenreId == genreId)).Take(30)
+                .Where(m => m.GenresOfMovie.Any(g => g.GenreId == genreId)).Skip((page-1)*30).Take(30)
                 .ToListAsync();
+
+            // var totalMoivesOfGenre = awat _dbCOntext.MovieGenre.Where(g => g.GenreId = genreId).Count();
             return movies;
         }
 

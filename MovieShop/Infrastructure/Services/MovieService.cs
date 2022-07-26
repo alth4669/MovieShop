@@ -62,9 +62,9 @@ namespace Infrastructure.Services
             return movieDetailsModel;
         }
 
-        public async Task<List<MovieCardModel>> GetMoviesByGenre(int genreId)
+        public async Task<List<MovieCardModel>> GetMoviesByGenre(int genreId, int page)
         {
-            var movies = await _movieRepository.GetByGenre(genreId);
+            var movies = await _movieRepository.GetByGenre(genreId, page);
             var movieCards = new List<MovieCardModel>();
             foreach (var movie in movies)
             {

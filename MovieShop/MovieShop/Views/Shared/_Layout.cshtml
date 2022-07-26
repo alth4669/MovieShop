@@ -33,7 +33,7 @@
                                 @inject IGenreService _genreService
                                 @foreach (var genre in await _genreService.GetAllGenres())
                                 {
-                                    <li><a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="@genre.Id">@genre.Name</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="@genre.Id" asp-route-name="@genre.Name" asp-route-page="1">@genre.Name</a></li>
                                 }
                             </ul>
                         </li>
