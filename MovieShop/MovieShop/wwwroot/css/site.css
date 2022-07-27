@@ -17,6 +17,14 @@ body {
   margin-bottom: 60px;
 }
 
+.nav-item a {
+    border-radius: 40px;
+}
+#login.navbar-nav li {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
