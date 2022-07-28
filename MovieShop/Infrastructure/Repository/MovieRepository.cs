@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Models;
 
 namespace Infrastructure.Repository
 {
@@ -18,15 +19,21 @@ namespace Infrastructure.Repository
             _movieShopDbContext = dbContext;
         }
 
-        public async Task<List<Movie>> GetByGenre(int genreId, int page)
+        public async Task<GenrePageModel<Movie>> GetByGenre(int genreId, int page = 1, int pageSize = 30)
         {
+            var genreCount = await _movieShopDbContext.MovieGenres.Where(g => g.GenreId == genreId).CountAsync();
+            var genreName = await _movieShopDbContext.Genres.Where(g => g.Id == genreId).Select(g => g.Name).FirstOrDefaultAsync();
+            if (genreCount == 0)
+            {
+                throw new Exception("No movies found in that genre!");
+            }
+
             var movies = await _movieShopDbContext.Movies
                 .Include(m => m.GenresOfMovie)
-                .Where(m => m.GenresOfMovie.Any(g => g.GenreId == genreId)).Skip((page-1)*30).Take(30)
+                .Where(m => m.GenresOfMovie.Any(g => g.GenreId == genreId)).Skip((page-1)*pageSize).Take(pageSize)
                 .ToListAsync();
 
-            // var totalMoivesOfGenre = awat _dbCOntext.MovieGenre.Where(g => g.GenreId = genreId).Count();
-            return movies;
+            return new GenrePageModel<Movie>(genreName, movies, page, pageSize, genreCount);
         }
 
         public async Task<Movie> GetById(int id)

@@ -61,16 +61,16 @@ namespace Infrastructure.Services
 
             return movieDetailsModel;
         }
-
-        public async Task<List<MovieCardModel>> GetMoviesByGenre(int genreId, int page)
+        
+        public async Task<GenrePageModel<MovieCardModel>> GetMoviesByGenre(int genreId, int page = 1, int pageSize = 30)
         {
-            var movies = await _movieRepository.GetByGenre(genreId, page);
+            var movies = await _movieRepository.GetByGenre(genreId, page, pageSize);
             var movieCards = new List<MovieCardModel>();
-            foreach (var movie in movies)
+            foreach (var movie in movies.Data)
             {
                 movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
             }
-            return movieCards;
+            return new GenrePageModel<MovieCardModel>(movies.Name, movieCards, page, pageSize, movies.TotalRowCount);
         }
 
         public async Task<List<MovieCardModel>> GetTopRevenueMovies()

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using MovieShop.Models;
 using System.Diagnostics;
 using System.Security.Claims;
-using System.Web;
 
 namespace MovieShop.Controllers
 {
@@ -63,10 +62,10 @@ namespace MovieShop.Controllers
             return LocalRedirect("~/");
         }
 
-        [HttpPost]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }

@@ -22,15 +22,11 @@ namespace MovieShop.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Genre(int id, string name, int page)
+        public async Task<IActionResult> Genre(int id, int page = 1, int pageSize = 30)
         {
-            ViewData["genreId"] = id;
-            ViewData["genreName"] = name;
-            ViewData["pageNo"] = page;
-            // total number of pages
-            // total count of movies / 30 to get toital number pages
-            var movieCards = await _movieService.GetMoviesByGenre(id, page);
-            return View(movieCards);
+
+            var pagedGenreSet = await _movieService.GetMoviesByGenre(id, page, pageSize);
+            return View(pagedGenreSet);
         }
     }
 }
