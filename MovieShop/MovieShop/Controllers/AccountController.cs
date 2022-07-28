@@ -1,8 +1,11 @@
 ﻿using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using MovieShop.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MovieShop.Controllers
 {
@@ -38,10 +41,24 @@ namespace MovieShop.Controllers
         public async Task<IActionResult> Login(UserLoginModel model)
         {
             var user = await _accountService.ValidateUser(model);
-            if (user == false)
+            if (user == null)
             {
                 return View(model);
             }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim (ClaimTypes.Surname, user.LastName),
+                new Claim (ClaimTypes.GivenName, user.FirstName),
+                new Claim ("language", "english")
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
             return LocalRedirect("~/");
         }
     }
