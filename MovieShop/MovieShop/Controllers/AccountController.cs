@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieShop.Models;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Web;
 
 namespace MovieShop.Controllers
 {
@@ -60,6 +61,12 @@ namespace MovieShop.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             return LocalRedirect("~/");
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            return View();
         }
     }
 }

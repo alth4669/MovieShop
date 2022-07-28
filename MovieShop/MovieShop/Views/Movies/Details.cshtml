@@ -36,12 +36,27 @@
              <p style="font-size:.7em">@Model.Overview</p>
          </div>
          <div class="col review-purchase">
+             @inject ICurrentUser _currentUser
              <div class="row justify-content-center">
-                 <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#reviewModal">Review</button>
+                @if (_currentUser.IsAuthenticated == true)
+                {
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#reviewModal">Review</button>
+
+                }
+                else {
+                    <a class="btn btn-outline-light" asp-area="" asp-controller="Account" asp-action="Login">Review</a>
+                }       
              </div>
              <br>
              <div class="row justify-content-center">
-                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">Purchase $@Model.Price</button>
+                @if (_currentUser.IsAuthenticated == true)
+                {
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">Purchase $@Model.Price</button>
+                }
+                else
+                {
+                    <a class="btn btn-light" asp-area="" asp-controller="Account" asp-action="Login">Purchase $@Model.Price</a>
+                }
              </div>
          </div>
      </div>

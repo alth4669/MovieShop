@@ -17,7 +17,7 @@ body {
   margin-bottom: 60px;
 }
 
-.nav-item a {
+#login.nav-item a {
     border-radius: 40px;
 }
 #login.navbar-nav li {
@@ -58,7 +58,7 @@ body {
     padding: 2em;
 }
 
-.review-purchase button {
+.review-purchase button, .review-purchase a {
     width: 75%;
 }
 
