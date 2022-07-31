@@ -140,7 +140,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(5,2)")
                         .HasDefaultValue(9.9m);
 
-                    b.Property<DateTime?>("ReleaseDate")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("Revenue")
@@ -217,6 +217,31 @@ namespace Infrastructure.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("MovieGenres", (string)null);
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.Purchase", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PurchaseDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PurchaseNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.HasKey("UserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Review", b =>
@@ -385,13 +410,13 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("ApplicationCore.Entities.MovieCast", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.Cast", "Cast")
-                        .WithMany()
+                        .WithMany("MoviesOfCast")
                         .HasForeignKey("CastId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ApplicationCore.Entities.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("CastsOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -410,12 +435,31 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ApplicationCore.Entities.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("GenresOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Genre");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.Purchase", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationCore.Entities.User", "Customer")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
 
                     b.Navigation("Movie");
                 });
@@ -442,7 +486,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("ApplicationCore.Entities.Trailer", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Trailers")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -469,9 +513,23 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.Cast", b =>
+                {
+                    b.Navigation("MoviesOfCast");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.Genre", b =>
                 {
                     b.Navigation("MoviesOfGenre");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
+                {
+                    b.Navigation("CastsOfMovie");
+
+                    b.Navigation("GenresOfMovie");
+
+                    b.Navigation("Trailers");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Role", b =>
