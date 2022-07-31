@@ -7,17 +7,53 @@
 <div class="rounded">
     <div class="container-fluid">
         <div class="row">
+            @inject ICurrentUser _currentUser
             @foreach (var purchase in Model)
             {
-                <div class="col-xl-2 col-sm-4 col-lg-3 col-6">
+                <div class="purchase-details col-xl-2 col-sm-4 col-lg-3 col-6">
                     <div class="card mb-4">
                         <a asp-controller="Movies" asp-action="Details" asp-route-id="@purchase.MovieId" >
                             <img src="@purchase.PosterUrl" class="img-fluid" alt="@purchase.MovieId" />
                         </a>
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#purchaseDetailsModal" data-bs-userId=@_currentUser.UserId data-bs-movieId=@purchase.MovieId>Purchase Details</button>
                     </div>
-
                 </div>
             }
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="purchaseDetailsModal" tabindex="-1" role="dialog" aria-labelledby="purchaseDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="purchaseDetailsLabel">Purchase Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col purchase-details">
+                                    <p>Purchase Date</p>
+                                    <span class="badge rounded-pill bg-dark purchase-date">Date</span>
+                                </div>  
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col purchase-details">
+                                    <p>Price</p>
+                                    <span class="badge rounded-pill bg-dark purchase-price">Price</span>
+                                </div>  
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col purchase-details">
+                                    <p>Purchase Number</p>
+                                    <span class="badge rounded-pill bg-dark purchase-number">Purchase No</span>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
 </div>

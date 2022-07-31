@@ -137,7 +137,8 @@ namespace Infrastructure.Services
                 PurchaseNumber = purchase.PurchaseNumber.ToString(),
                 TotalPrice = purchase.TotalPrice,
                 PurchaseDateTime = purchase.PurchaseDateTime,
-                MovieId = purchase.MovieId
+                MovieId = purchase.MovieId,
+                PosterUrl = purchase.Movie.PosterUrl
             };
         }
 

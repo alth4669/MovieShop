@@ -80,6 +80,13 @@ namespace MovieShop.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPurchaseDetails(int userId, int movieId)
+        {
+            var details = await _userService.GetPurchaseDetails(userId, movieId);
+            return PartialView("_PurchaseDetails", details);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

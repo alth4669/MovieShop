@@ -40,7 +40,7 @@ body {
     max-height: 30em;
 }
 
-.movie-info p {
+.movie-info p, .purchase-details p {
     display: inline-block;
     margin: 0;
 }
@@ -86,3 +86,7 @@ body {
 .role-data img {
     max-height: 10em;
 }
+
+/*.purchase-details button {
+    width: 100%;
+}*/
