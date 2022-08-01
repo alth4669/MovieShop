@@ -87,6 +87,20 @@ namespace MovieShop.Controllers
             return PartialView("_PurchaseDetails", details);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateReview(ReviewRequestModel model)
+        {
+            var updatedReview = await _userService.UpdateMovieReview(model);
+            return LocalRedirect("~/Movies/Details/" + model.MovieId);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteReview(ReviewRequestModel model)
+        {
+            await _userService.DeleteMovieReview(model.UserId, model.MovieId);
+            return LocalRedirect("~/Movies/Details/" + model.MovieId);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

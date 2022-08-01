@@ -10,18 +10,33 @@
             @inject ICurrentUser _currentUser
             @foreach (var purchase in Model)
             {
-                <div class="purchase-details col-xl-2 col-sm-4 col-lg-3 col-6">
+                <div id="purchaseDetails" class="purchase-details col-xl-2 col-sm-4 col-lg-3 col-6">
                     <div class="card mb-4">
                         <a asp-controller="Movies" asp-action="Details" asp-route-id="@purchase.MovieId" >
                             <img src="@purchase.PosterUrl" class="img-fluid" alt="@purchase.MovieId" />
                         </a>
-                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#purchaseDetailsModal" data-bs-userId=@_currentUser.UserId data-bs-movieId=@purchase.MovieId>Purchase Details</button>
+                        <button id="purchaseDetailsBtn" type="button" data-bs-toggle="modal" data-bs-target="#purchaseDetailsModal" data-purchaseDate="@purchase.PurchaseDateTime" data-price="@purchase.TotalPrice" data-purchaseNumber="@purchase.PurchaseNumber" class="btn btn-dark">Purchase Details</button>
                     </div>
                 </div>
             }
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/jav">
+    $('#purchaseDetailsModal').on('show.bs.modal', function(event) {
+        var button = $(event.RelatedTarget);
+        var purchaseDate = button.data('data-purchaseDate');
+        var purchasePrice = button.data('data-price');
+        var purchaseNumber = button.data('data-purchaseNumber');
+        var modal = $(this);
+        modal.find('.purchase-date').html(purchaseDate);
+        modal.find('.purchase-price').html(purchasePrice);
+        modal.find('.purchase-number').html(purchaseNumber);
+    })
+    </script>
+}
 
 <div class="modal fade" id="purchaseDetailsModal" tabindex="-1" role="dialog" aria-labelledby="purchaseDetailsLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -35,21 +50,21 @@
                             <div class="row">
                                 <div class="col purchase-details">
                                     <p>Purchase Date</p>
-                                    <span class="badge rounded-pill bg-dark purchase-date">Date</span>
+                                    <span class="badge rounded-pill bg-dark purchase-date"></span>
                                 </div>  
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col purchase-details">
                                     <p>Price</p>
-                                    <span class="badge rounded-pill bg-dark purchase-price">Price</span>
+                                    <span class="badge rounded-pill bg-dark purchase-price"></span>
                                 </div>  
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col purchase-details">
                                     <p>Purchase Number</p>
-                                    <span class="badge rounded-pill bg-dark purchase-number">Purchase No</span>
+                                    <span class="badge rounded-pill bg-dark purchase-number"></span>
                                 </div>  
                             </div>
                         </div>

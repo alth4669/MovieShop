@@ -142,6 +142,25 @@ namespace Infrastructure.Services
             };
         }
 
+        public async Task<ReviewRequestModel> GetReviewDetails(int userId, int movieId)
+        {
+            var review = await _reportRepository.GetReviewById(userId, movieId);
+            if (review == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new ReviewRequestModel
+                {
+                    MovieId = review.MovieId,
+                    UserId = review.UserId,
+                    Rating = review.Rating,
+                    ReviewText = review.ReviewText
+                };
+            }
+        }
+
         public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
         {
             var purchase = await _purchaseRepository.GetByUserMovie(userId, purchaseRequest.MovieId);
@@ -177,7 +196,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest)
         {
-            var review = await _reportRepository.DeleteReview(favoriteRequest.UserId, favoriteRequest.MovieId);
+            var review = await _reportRepository.DeleteFavorite(favoriteRequest.UserId, favoriteRequest.MovieId);
             if (review == null)
             {
                 return false;

@@ -4,6 +4,9 @@
     ViewData["Title"] = Model.Title;
 }
 
+@inject IUserService _userService
+@inject ICurrentUser _currentUser
+
  <div style="background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(@Model.BackdropUrl); background-size: cover" class="backdrop container-fluid">
      <div class="row justify-content-center">
          <div style="text-align: center" class="col">
@@ -11,7 +14,14 @@
          </div>
          <div class="col">
              <div class="row">
-                 <h1>@Model.Title</h1>
+                @if(_currentUser.IsAuthenticated && await _userService.FavoriteExists(_currentUser.UserId, @Model.Id))
+                {
+                    <h1>@Model.Title <span class="badge bg-success"><i class="fa-solid fa-thumbs-up"></i></span></h1>
+                }
+                else
+                {
+                    <h1>@Model.Title</h1>   
+                }
                  <p style="font-size:.75em">@Model.Tagline</p>
              </div>
              <br>
@@ -36,7 +46,6 @@
              <p style="font-size:.7em">@Model.Overview</p>
          </div>
          <div class="col review-purchase">
-             @inject ICurrentUser _currentUser
              <div class="row justify-content-center">
                 @if (_currentUser.IsAuthenticated == true)
                 {
@@ -49,7 +58,6 @@
              </div>
              <br>
              <div class="row justify-content-center">
-                @inject IUserService _userService
                 @if (_currentUser.IsAuthenticated == true)
                 {
                     PurchaseRequestModel purchase = new PurchaseRequestModel
@@ -93,7 +101,7 @@
                                 <input type="hidden" id="UserId" name="UserId" value="@_currentUser.UserId">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-thumbs-up"></i></button>
+                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-thumbs-down"></i></button>
                             </div>
                         </form>
                     </div>
@@ -182,14 +190,20 @@
 
 @if (_currentUser.IsAuthenticated)
 {
+    var review = await _userService.GetReviewDetails(@_currentUser.UserId, @Model.Id);
+    var title = review != null ? "Update your review for " + @Model.Title : "Leave a review for " + @Model.Title;
+    var rating = review != null ? review.Rating : 1;
+    var reviewText = review != null ? review.ReviewText : "";
+    var aspAction = review != null ? "UpdateReview" : "Review";
+
     <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reviewModalLabel">Leave a review for @Model.Title</h5>
+                    <h5 class="modal-title" id="reviewModalLabel">@title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form asp-controller="User" asp-action="Review">
+                <form asp-controller="User" asp-action=@aspAction>
                     <div class="modal-body">
                         <div class="form-group">
                                 <input type="hidden" id="MovieId" name="MovieId" value="@Model.Id">
@@ -198,26 +212,27 @@
                         <div class="form-group">
                             <label for="rating">Choose Rating:</label>
                             <select class="form-control" id="Rating" name="Rating">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
+                                @for (var i=1; i<=9; i++)
+                                {
+                                    if (i==@rating) {<option selected>@i</option>}
+                                    else {<option>@i</option>}
+                                }
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="reviewText">Write your review here:</label>
-                            <textarea class="form-control" rows="5" id="ReviewText" name="ReviewText"></textarea>
+                            <textarea class="form-control" rows="5" id="ReviewText" name="ReviewText">@reviewText</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        @if (@review != null) {
+                            <button type="submit" class="btn btn-primary">Update Review</button>
+                            <button type="submit" class="btn btn-primary" asp-controller="User" asp-action="DeleteReview">Delete Review</button>
+                        }
+                        else {
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        }
                     </div>
                 </form>
             </div>
