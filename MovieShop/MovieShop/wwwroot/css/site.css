@@ -87,6 +87,10 @@ body {
     max-height: 10em;
 }
 
-/*.purchase-details button {
-    width: 100%;
-}*/
+.purchase-poster {
+    padding: 0;
+}
+
+.purchase-poster img {
+    max-width: 100%;
+}

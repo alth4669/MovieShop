@@ -1,7 +1,10 @@
 ﻿@model ApplicationCore.Models.PurchaseRequestModel
 
+@{
+    var modalId = "modal" + @Model.MovieId;
+}
 
-<div class="modal fade" id="purchaseDetailsModal" tabindex="-1" role="dialog" aria-labelledby="purchaseDetailsLabel" aria-hidden="true">
+<div class="modal fade" id=@modalId tabindex="-1" role="dialog" aria-labelledby="purchaseDetailsLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,28 +12,35 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                     <div class="modal-body">
-                        <div class="container-fluid">
+                        
                             <div class="row">
-                                <div class="col purchase-details">
-                                    <p>Purchase Date</p>
-                                    <span id="purchase-date" class="badge rounded-pill bg-dark">@Model.PurchaseDateTime</span>
-                                </div>  
+                                <div class="col-3 purchase-poster">
+                                    <img src="@Model.PosterUrl" />
+                                </div>
+                                <div class="col-9">
+                                    <div class="row">
+                                        <div class="col purchase-details">
+                                            <p>Purchase Date</p>
+                                            <span id="purchase-date" class="badge rounded-pill bg-dark">@Model.PurchaseDateTime</span>
+                                        </div>  
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col purchase-details">
+                                            <p>Price</p>
+                                            <span id="purchase-price" class="badge rounded-pill bg-dark">@Model.TotalPrice</span>
+                                        </div>  
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col purchase-details">
+                                            <p>Purchase Number</p>
+                                            <span id="purchase-number" class="badge rounded-pill bg-dark">@Model.PurchaseNumber</span>
+                                        </div>  
+                                    </div>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col purchase-details">
-                                    <p>Price</p>
-                                    <span id="purchase-price" class="badge rounded-pill bg-dark">@Model.TotalPrice</span>
-                                </div>  
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col purchase-details">
-                                    <p>Purchase Number</p>
-                                    <span id="purchase-number" class="badge rounded-pill bg-dark">@Model.PurchaseNumber</span>
-                                </div>  
-                            </div>
-                        </div>
+                        
                     </div>
             </div>
         </div>

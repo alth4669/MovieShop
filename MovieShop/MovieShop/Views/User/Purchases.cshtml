@@ -10,12 +10,14 @@
             @inject ICurrentUser _currentUser
             @foreach (var purchase in Model)
             {
+                var modalId = "#modal" + @purchase.MovieId;
                 <div id="purchaseDetails" class="purchase-details col-xl-2 col-sm-4 col-lg-3 col-6">
                     <div class="card mb-4">
                         <a asp-controller="Movies" asp-action="Details" asp-route-id="@purchase.MovieId" >
                             <img src="@purchase.PosterUrl" class="img-fluid" alt="@purchase.MovieId" />
                         </a>
-                        <a data-bs-toggle="modal" data-bs-target="#purchaseDetailsModal" asp-controller="User" asp-action="GetPurchaseDetails" asp-route-userId="@_currentUser.UserId" asp-route-movieId="@purchase.MovieId" type="button" class="btn btn-dark">Purchase Details</a>
+                        <a data-bs-toggle="modal" data-bs-target=@modalId asp-controller="User" asp-action="GetPurchaseDetails" asp-route-userId="@_currentUser.UserId" asp-route-movieId="@purchase.MovieId" type="button" class="btn btn-dark">Purchase Details</a>
+                        <partial name="_PurchaseDetails" model=@purchase>
                         @*<button id="purchaseDetailsBtn" type="button" class="btn btn-dark">Purchase Details</button>*@
                     </div>
                 </div>
@@ -23,7 +25,6 @@
         </div>
     </div>
 </div>
-<partial name="_purchaseDetails">
 
 
 @section scripts{
