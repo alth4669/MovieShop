@@ -29,5 +29,12 @@ namespace Infrastructure.Repository
             var user = await _movieShopDbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
+
+        public async Task<User> GetUserById(int id)
+        {
+            var user = await _movieShopDbContext.Users.Include(u => u.RolesOfUser)
+            .FirstOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
     }
 }

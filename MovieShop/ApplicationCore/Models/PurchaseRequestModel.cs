@@ -8,7 +8,7 @@ namespace ApplicationCore.Models
 {
     public class PurchaseRequestModel
     {
-        public string PurchaseNumber { get; set; }
+        public string? PurchaseNumber { get; set; }
         public decimal? TotalPrice { get; set; }
         public DateTime PurchaseDateTime { get; set; }
         public int MovieId { get; set; }

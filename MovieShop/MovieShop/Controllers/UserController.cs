@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieShop.Infra;
 using MovieShop.Models;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 
 namespace MovieShop.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

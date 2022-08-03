@@ -11,5 +11,6 @@ namespace ApplicationCore.Contracts.Services
     {
         Task<bool> CreateUser(UserRegisterModel model);
         Task<ActiveUserModel> ValidateUser(UserLoginModel model);
+        Task<bool> EmailExists(string email);
     }
 }

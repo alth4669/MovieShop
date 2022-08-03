@@ -21,6 +21,10 @@ namespace Infrastructure.Services
         public async Task<MovieDetailsModel> GetMovieDetails(int movieId)
         {
             var movieDetails = await _movieRepository.GetById(movieId);
+            if (movieDetails == null)
+            {
+                return null;
+            }
 
             var movieDetailsModel = new MovieDetailsModel
             {
@@ -37,7 +41,9 @@ namespace Infrastructure.Services
                 TmdbUrl = movieDetails.TmdbUrl,
                 RunTime = movieDetails.RunTime,
                 Tagline = movieDetails.Tagline,
-                Price = movieDetails.Price
+                Price = movieDetails.Price,
+                Rating = movieDetails.Rating
+                
             };
 
             foreach (var trailer in movieDetails.Trailers)
@@ -71,6 +77,41 @@ namespace Infrastructure.Services
                 movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
             }
             return new GenrePageModel<MovieCardModel>(movies.Name, movieCards, page, pageSize, movies.TotalRowCount);
+        }
+
+        public async Task<SearchPageModel<MovieCardModel>> GetMoviesBySearch(string title, int page = 1, int pageSize = 30)
+        {
+            var movies = await _movieRepository.GetByTitle(title, page, pageSize);
+            var movieCards = new List<MovieCardModel>();
+            foreach (var movie in movies.Data)
+            {
+                movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
+            }
+            return new SearchPageModel<MovieCardModel>(movies.Name, movieCards, page, pageSize, movies.TotalRowCount);
+        }
+
+        public async Task<ReviewPageModel<ReviewModel>> GetReviewsByMovie(int movieId, int page = 1, int pageSize = 30)
+        {
+            var reviews = await _movieRepository.GetMovieReviews(movieId, page, pageSize);
+            if (reviews == null) { return null; }
+            var ReviewModels = new List<ReviewModel>();
+            foreach (var review in reviews.Data)
+            {
+                ReviewModels.Add(new ReviewModel {userId = review.UserId, movieId = movieId,
+                    title = reviews.Name, rating = review.Rating, reviewText = review.ReviewText });
+            }
+            return new ReviewPageModel<ReviewModel>(ReviewModels.First().title, ReviewModels, page, pageSize, reviews.TotalRowCount);
+        }
+
+        public async Task<List<MovieCardModel>> GetTopRatedMovies()
+        {
+            var movies = await _movieRepository.GetTop30RatedMovies();
+            var movieCards = new List<MovieCardModel>();
+            foreach (var movie in movies)
+            {
+                movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
+            }
+            return movieCards;
         }
 
         public async Task<List<MovieCardModel>> GetTopRevenueMovies()

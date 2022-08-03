@@ -14,10 +14,12 @@ namespace Infrastructure.Services
     {
         private readonly IReportRepository _reportRepository;
         private readonly IPurchaseRepository _purchaseRepository;
-        public UserService(IReportRepository reportRepository, IPurchaseRepository purchaseRepository)
+        private readonly IUserRepository _userRepository;
+        public UserService(IReportRepository reportRepository, IPurchaseRepository purchaseRepository, IUserRepository userRepository)
         {
             _reportRepository = reportRepository;
             _purchaseRepository = purchaseRepository;
+            _userRepository = userRepository;
         }
         public async Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest)
         {
@@ -132,6 +134,7 @@ namespace Infrastructure.Services
         public async Task<PurchaseRequestModel> GetPurchaseDetails(int userId, int movieId)
         {
             var purchase = await _purchaseRepository.GetByUserMovie(userId, movieId);
+            if (purchase == null) { return null; }
             return new PurchaseRequestModel
             {
                 PurchaseNumber = purchase.PurchaseNumber.ToString(),
@@ -159,6 +162,32 @@ namespace Infrastructure.Services
                     ReviewText = review.ReviewText
                 };
             }
+        }
+
+        public async Task<UserModel> GetUserById(int userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+            if (user == null)
+            {
+                throw new Exception($"Unable to locate user with id={userId}");
+            }
+            var roles = new List<Role>();
+            foreach (var role in user.RolesOfUser)
+            {
+                roles.Add(role.Role);
+            }
+            var userModel = new UserModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth,
+                phoneNumber = user.PhoneNumber,
+                profilePictureUrl = user.ProfilePictureUrl,
+                roles = roles
+            };
+            return userModel;
         }
 
         public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
