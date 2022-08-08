@@ -63,6 +63,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseMovieShopExceptionHandler();
 app.UseHttpsRedirection();
+app.UseCors(policy =>
+{
+    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
