@@ -42,7 +42,7 @@ namespace MovieShopAPI.Controllers
         {
             if (await _userService.PurchaseMovie(purchase, userId))
             {
-                return Ok(purchase);
+                return Ok(true);
             }
             return Conflict(new { errorMessage = "User has already purchased movie" });
 
@@ -54,7 +54,7 @@ namespace MovieShopAPI.Controllers
         {
             if(await _userService.AddFavorite(favorite))
             {
-                return Ok();
+                return Ok(true);
             }
             return Conflict(new { errorMessage = "User has already favorited movie" });
 
@@ -66,7 +66,7 @@ namespace MovieShopAPI.Controllers
         {
             if (await _userService.RemoveFavorite(favorite))
             {
-                return Ok();
+                return Ok(true);
             }
             return Conflict(new { errorMessage = "User currently does not have this movie favorited" });
         }
@@ -75,12 +75,7 @@ namespace MovieShopAPI.Controllers
         [Route("check-movie-favorite/{movieId:int}")]
         public async Task<IActionResult> CheckFavorite(int movieId)
         {
-
-            if (await _userService.FavoriteExists(_currentUser.UserId , movieId))
-            {
-                return Ok();
-            }
-            return NotFound(new { errorMessage = "Favorite not found for this user" });
+            return Ok(await _userService.FavoriteExists(_currentUser.UserId, movieId));
         }
 
         [HttpPost]
@@ -89,7 +84,7 @@ namespace MovieShopAPI.Controllers
         {
             if (await _userService.AddMovieReview(review))
             {
-                return Ok();
+                return Ok(true);
             }
             return Conflict(new { errorMessage = "Review already exists for this movie for this user!" });
         }
@@ -108,9 +103,21 @@ namespace MovieShopAPI.Controllers
         {
             if (await _userService.DeleteMovieReview(_currentUser.UserId, movieId)) 
             {
-                return Ok();
+                return Ok(true);
             }
             return NotFound(new { errorMessage = "No review found for this movie for this user" });
+        }
+
+        [HttpGet]
+        [Route("review-details/{movieId:int}")]
+        public async Task<IActionResult> GetReviewDetails(int movieId)
+        {
+            var review = await _userService.GetReviewDetails(_currentUser.UserId, movieId);
+            if (review == null)
+            {
+                return NotFound(new { errorMessage = "No review found for this movie for this user" });
+            }
+            return Ok(review);
         }
 
         [HttpGet]

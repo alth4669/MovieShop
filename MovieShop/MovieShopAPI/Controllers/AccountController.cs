@@ -27,7 +27,7 @@ namespace MovieShopAPI.Controllers
         {
             if(await _accountService.CreateUser(model))
             {
-                return Ok();
+                return Ok(true);
             }
             return BadRequest(new {errorMessage = "Unable to register new user"});
         }
@@ -62,7 +62,8 @@ namespace MovieShopAPI.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, model.Email),
                 new Claim(JwtRegisteredClaimNames.FamilyName, model.LastName),
                 new Claim(JwtRegisteredClaimNames.GivenName, model.FirstName),
-                new Claim ("language", "english")
+                new Claim ("language", "english"),
+                new Claim ("isAdmin", (model.Id==2) ? "true" : "false")
             };
 
             var identityClaims = new ClaimsIdentity();
